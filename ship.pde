@@ -1,3 +1,4 @@
+
 class Ship extends GameObject {
   //1. instance variables
   PVector direction;
@@ -7,7 +8,7 @@ class Ship extends GameObject {
 
   //2. constructor(s)
   Ship() {
-    lives = 3;
+    lives = 5;
     shotTimer = 0;
     threshold = 30;
     size = 40;
@@ -15,11 +16,12 @@ class Ship extends GameObject {
     location = new PVector(width/2, height/2);
     velocity = new PVector(0, 0);
     direction = new PVector(0, -0.05);
-    hh = new PVector(0,1);
+    hh = new PVector(0, 1);
   }
 
   //3. behavior functions
   void show() {
+    
     pushMatrix();
     translate(location.x, location.y);
     rotate(direction.heading());
@@ -32,6 +34,7 @@ class Ship extends GameObject {
     super.act();
 
     shotTimer++;
+    
 
 
     if (upkey) velocity.add(direction);

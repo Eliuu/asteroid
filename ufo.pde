@@ -1,17 +1,33 @@
 class ufo extends GameObject {
-  ufo(){
+  int shotTimer;
+  int threshold;
+  int timer;
+  ufo() {
+    lives = 3;
     location = new PVector(random(width), random(height));
-    
+    velocity = new PVector(1, 2);
+    velocity.setMag(random(.5, 1));
+    velocity.rotate(random(TWO_PI));
+    threshold = 80;
+    size = 80;
+    shotTimer = 0;
   }
-  
-  void show(){
-    image(ufo, location.x, location.y,50,50);
-    
+
+  void show() {
+    image(ufo, location.x, location.y, 80, 80);
   }
-  
-  void act(){
+
+  void act() {
     super.act();
+    shotTimer++;
+    timer++;
+    if (timer>=30 && shotTimer >= threshold) {
+      myGameObjects.add(new bBullet());
+      shotTimer = 0;
+    }
+
+    if (dist(myShip.location.x, myShip.location.y, location.x, location.y) < size/2 + myShip.size/2) {
+      myShip.lives--;
+    }
   }
-
-
 }

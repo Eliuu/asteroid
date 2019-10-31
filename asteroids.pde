@@ -1,7 +1,9 @@
+
 class Asteroid extends GameObject {
+  int timer = 0;
   Asteroid() {
     lives = 1;
-    size = 90;
+    size = 60;
     location = new PVector(random(width), random(height));
     velocity = new PVector(0, 1);
     velocity.setMag(random(0, 2));
@@ -25,6 +27,10 @@ class Asteroid extends GameObject {
 
   void act() {
     super.act();
+    timer--;
+    if (timer <= 0) {
+      timer = 0;
+    }
     int i = 0;
     while (i < myGameObjects.size()) {
       GameObject myObj = myGameObjects.get(i);
@@ -52,9 +58,11 @@ class Asteroid extends GameObject {
       i++;
     }
 
-    if (dist(myShip.location.x, myShip.location.y, location.x, location.y) < size/2 + myShip.size/2) {
-      lives = 0;
+    if (dist(myShip.location.x, myShip.location.y, location.x, location.y) < size/2 + myShip.size/2 && timer == 0) {
+      myGameObjects.add(new Asteroid(size/2, location.x, location.y));
+      myGameObjects.add(new Asteroid(size/2, location.x, location.y));
       myShip.lives--;
+      timer = 100;
     }
 
     if (size <= 10) {

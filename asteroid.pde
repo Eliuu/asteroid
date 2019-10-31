@@ -3,6 +3,7 @@ PImage shipimg;
 PImage ufo;
 PFont pixel;
 Ship myShip;
+ufo myUfo;
 ArrayList<GameObject> myGameObjects;
 int mode;
 final int intro = 0;
@@ -15,24 +16,29 @@ int hscore;
 
 void setup() {
   size(800, 600);
-  mode = youwin;
+  mode = game;
   score = 0;
   hscore = 0;
   shipimg = loadImage("ship.png");
   ufo = loadImage("ufo.png");
   imageMode(CENTER);
+  myUfo = new ufo();
   myShip = new Ship();
   myGameObjects = new ArrayList<GameObject>();
   pixel = createFont("Coder's Crux.ttf", 20);
+  frameRate(60);
 
   myGameObjects.add(new Asteroid());
   myGameObjects.add(new Asteroid());
   myGameObjects.add(new Asteroid());
   myGameObjects.add(new Asteroid());
-  myGameObjects.add(new ufo());
 }
 
 void draw() {
+  println(frameCount);
+  if (frameCount == 1000) {
+    myGameObjects.add(new ufo());
+  }
   if ( mode == intro) {
     intro();
   } else if (mode == game) {
@@ -83,6 +89,7 @@ void mouseReleased() {
 void reset() {
   myGameObjects = new ArrayList<GameObject>();
   score = 0;
+  frameCount = 0;
   myShip.lives = 3;  
   myShip.location = new PVector(width/2, height/2);
   myShip.velocity = new PVector(0, 0);
@@ -91,5 +98,7 @@ void reset() {
   myGameObjects.add(new Asteroid());
   myGameObjects.add(new Asteroid());
   myGameObjects.add(new Asteroid());
-  //myGameObjects.add(new ufo());
+  if (frameCount == 1000) {
+    myGameObjects.add(new ufo());
+  }
 }
